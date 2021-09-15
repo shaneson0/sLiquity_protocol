@@ -35,7 +35,7 @@ module.exports = function(deployer) {
     const defaultPool = await DefaultPool.deployed()
     const functionCaller = await FunctionCaller.deployed()
 
-    deployer.deploy(LUSDToken, troveManager.address, stabilityPool.address, borrowerOperations.address)
+    await deployer.deploy(LUSDToken, troveManager.address, stabilityPool.address, borrowerOperations.address)
     const lusdToken = await LUSDToken.deployed()
 
 
