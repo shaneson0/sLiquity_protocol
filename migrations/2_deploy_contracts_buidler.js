@@ -1,11 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2021-09-15 19:30:35
- * @LastEditTime: 2021-09-15 20:15:02
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /sLiquityProtocol/migrations/2_deploy_contracts_buidler.js
- */
 // Truffle migration script for deployment to Ganache
 
 const SortedTroves = artifacts.require("./SortedTroves.sol")
@@ -31,6 +23,7 @@ module.exports = function(deployer) {
   deployer.deploy(ActivePool)
   deployer.deploy(StabilityPool)
   deployer.deploy(DefaultPool)
+  deployer.deploy(LUSDToken, troveManager.address, stabilityPool.address, borrowerOperations.address)
   deployer.deploy(FunctionCaller)
 
   deployer.then(async () => {
@@ -41,20 +34,8 @@ module.exports = function(deployer) {
     const activePool = await ActivePool.deployed()
     const stabilityPool = await StabilityPool.deployed()
     const defaultPool = await DefaultPool.deployed()
+    const lusdToken = await LUSDToken.deployed()
     const functionCaller = await FunctionCaller.deployed()
-
-    
-    console.log("troveManager.address: ")
-    console.log(troveManager.address)
-
-    deployer.deploy(LUSDToken)
-    const lusdToken = await LUSDToken.new(
-      troveManager.address,
-      stabilityPool.address,
-      borrowerOperations.address
-    )
-    LUSDToken.setAsDeployed(lusdToken)
-    
 
     const liquityContracts = {
       borrowerOperations,
