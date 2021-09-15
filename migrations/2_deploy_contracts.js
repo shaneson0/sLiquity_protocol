@@ -1,13 +1,4 @@
-/*
- * @Author: your name
- * @Date: 2021-09-13 19:33:45
- * @LastEditTime: 2021-09-15 19:22:21
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /sLiquityProtocol/migrations/2_deploy_contracts.js
- */
-// Buidler-Truffle fixture for deployment to Buidler EVM
-
+// Truffle migration script for deployment to Ganache
 
 const SortedTroves = artifacts.require("./SortedTroves.sol")
 const ActivePool = artifacts.require("./ActivePool.sol")
@@ -19,53 +10,52 @@ const LUSDToken = artifacts.require("./LUSDToken.sol")
 const FunctionCaller = artifacts.require("./FunctionCaller.sol")
 const BorrowerOperations = artifacts.require("./BorrowerOperations.sol")
 
-const deploymentHelpers = require("../utils/deploymentHelpers.js")
+const deploymentHelpers = require("../utils/truffleDeploymentHelpers.js")
 
 const getAddresses = deploymentHelpers.getAddresses
 const connectContracts = deploymentHelpers.connectContracts
 
-module.exports = async () => {
-  const borrowerOperations = await BorrowerOperations.new()
-  const priceFeed = await PriceFeed.new()
-  const sortedTroves = await SortedTroves.new()
-  const troveManager = await TroveManager.new()
-  const activePool = await ActivePool.new()
-  const stabilityPool = await StabilityPool.new()
-  const defaultPool = await DefaultPool.new()
-  const functionCaller = await FunctionCaller.new()
-  const lusdToken = await LUSDToken.new(
-    troveManager.address,
-    stabilityPool.address,
-    borrowerOperations.address
-  )
-  BorrowerOperations.setAsDeployed(borrowerOperations)
-  PriceFeed.setAsDeployed(priceFeed)
-  SortedTroves.setAsDeployed(sortedTroves)
-  TroveManager.setAsDeployed(troveManager)
-  ActivePool.setAsDeployed(activePool)
-  StabilityPool.setAsDeployed(stabilityPool)
-  DefaultPool.setAsDeployed(defaultPool)
-  FunctionCaller.setAsDeployed(functionCaller)
-  LUSDToken.setAsDeployed(lusdToken)
+module.exports = function(deployer) {
+  deployer.deploy(BorrowerOperations)
+  deployer.deploy(PriceFeed)
+  deployer.deploy(SortedTroves)
+  deployer.deploy(TroveManager)
+  deployer.deploy(ActivePool)
+  deployer.deploy(StabilityPool)
+  deployer.deploy(DefaultPool)
+  deployer.deploy(LUSDToken)
+  deployer.deploy(FunctionCaller)
 
-  const contracts = {
-    borrowerOperations,
-    priceFeed,
-    lusdToken,
-    sortedTroves,
-    troveManager,
-    activePool,
-    stabilityPool,
-    defaultPool,
-    functionCaller
-  }
+  deployer.then(async () => {
+    const borrowerOperations = await BorrowerOperations.deployed()
+    const priceFeed = await PriceFeed.deployed()
+    const sortedTroves = await SortedTroves.deployed()
+    const troveManager = await TroveManager.deployed()
+    const activePool = await ActivePool.deployed()
+    const stabilityPool = await StabilityPool.deployed()
+    const defaultPool = await DefaultPool.deployed()
+    const lusdToken = await LUSDToken.deployed()
+    const functionCaller = await FunctionCaller.deployed()
 
-  // Grab contract addresses
-  const addresses = getAddresses(contracts)
-  console.log('deploy_contracts.js - Deployhed contract addresses: \n')
-  console.log(addresses)
-  console.log('\n')
+    const liquityContracts = {
+      borrowerOperations,
+      priceFeed,
+      lusdToken,
+      sortedTroves,
+      troveManager,
+      activePool,
+      stabilityPool,
+      defaultPool,
+      functionCaller
+    }
 
-  // Connect contracts to each other via the NameRegistry records
-  await connectContracts(contracts, addresses)
+    // Grab contract addresses
+    const liquityAddresses = getAddresses(liquityContracts)
+    console.log('deploy_contracts.js - Deployed contract addresses: \n')
+    console.log(liquityAddresses)
+    console.log('\n')
+
+    // Connect contracts to each other
+    await connectContracts(liquityContracts, liquityAddresses)
+  })
 }
