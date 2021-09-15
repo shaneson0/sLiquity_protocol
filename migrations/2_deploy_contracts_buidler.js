@@ -58,6 +58,6 @@ module.exports = function(deployer) {
     // console.log('\n')
 
     // Connect contracts to each other
-    await connectContracts(liquityContracts, liquityAddresses)
+    // await connectContracts(liquityContracts, liquityAddresses)
   })
 }
