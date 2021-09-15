@@ -52,10 +52,10 @@ module.exports = function(deployer) {
     }
 
     // Grab contract addresses
-    const liquityAddresses = getAddresses(liquityContracts)
-    console.log('deploy_contracts.js - Deployed contract addresses: \n')
-    console.log(liquityAddresses)
-    console.log('\n')
+    // const liquityAddresses = getAddresses(liquityContracts)
+    // console.log('deploy_contracts.js - Deployed contract addresses: \n')
+    // console.log(liquityAddresses)
+    // console.log('\n')
 
     // Connect contracts to each other
     await connectContracts(liquityContracts, liquityAddresses)
