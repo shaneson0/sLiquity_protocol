@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2021-09-15 19:30:35
- * @LastEditTime: 2021-09-15 19:49:08
- * @LastEditors: your name
+ * @LastEditTime: 2021-09-15 20:02:44
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /sLiquityProtocol/migrations/2_deploy_contracts_buidler.js
  */
@@ -24,15 +24,15 @@ const getAddresses = deploymentHelpers.getAddresses
 const connectContracts = deploymentHelpers.connectContracts
 
 module.exports = function(deployer) {
-  deployer.deploy(BorrowerOperations)
-  deployer.deploy(PriceFeed)
-  deployer.deploy(SortedTroves)
-  deployer.deploy(TroveManager)
-  deployer.deploy(ActivePool)
-  deployer.deploy(StabilityPool)
-  deployer.deploy(DefaultPool)
-  deployer.deploy(LUSDToken)
-  deployer.deploy(FunctionCaller)
+  // deployer.deploy(BorrowerOperations)
+  // deployer.deploy(PriceFeed)
+  // deployer.deploy(SortedTroves)
+  // deployer.deploy(TroveManager)
+  // deployer.deploy(ActivePool)
+  // deployer.deploy(StabilityPool)
+  // deployer.deploy(DefaultPool)
+  // deployer.deploy(LUSDToken)
+  // deployer.deploy(FunctionCaller)
 
   deployer.then(async () => {
     const borrowerOperations = await BorrowerOperations.deployed()
