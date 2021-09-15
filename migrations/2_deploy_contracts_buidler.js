@@ -23,7 +23,6 @@ module.exports = function(deployer) {
   deployer.deploy(ActivePool)
   deployer.deploy(StabilityPool)
   deployer.deploy(DefaultPool)
-  deployer.deploy(LUSDToken, troveManager.address, stabilityPool.address, borrowerOperations.address)
   deployer.deploy(FunctionCaller)
 
   deployer.then(async () => {
@@ -34,8 +33,11 @@ module.exports = function(deployer) {
     const activePool = await ActivePool.deployed()
     const stabilityPool = await StabilityPool.deployed()
     const defaultPool = await DefaultPool.deployed()
-    const lusdToken = await LUSDToken.deployed()
     const functionCaller = await FunctionCaller.deployed()
+
+    deployer.deploy(LUSDToken, troveManager.address, stabilityPool.address, borrowerOperations.address)
+    const lusdToken = await LUSDToken.deployed()
+
 
     const liquityContracts = {
       borrowerOperations,
