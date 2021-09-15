@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-09-15 19:30:35
- * @LastEditTime: 2021-09-15 20:02:44
+ * @LastEditTime: 2021-09-15 20:06:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /sLiquityProtocol/migrations/2_deploy_contracts_buidler.js
@@ -24,15 +24,14 @@ const getAddresses = deploymentHelpers.getAddresses
 const connectContracts = deploymentHelpers.connectContracts
 
 module.exports = function(deployer) {
-  // deployer.deploy(BorrowerOperations)
-  // deployer.deploy(PriceFeed)
-  // deployer.deploy(SortedTroves)
-  // deployer.deploy(TroveManager)
-  // deployer.deploy(ActivePool)
-  // deployer.deploy(StabilityPool)
-  // deployer.deploy(DefaultPool)
-  // deployer.deploy(LUSDToken)
-  // deployer.deploy(FunctionCaller)
+  deployer.deploy(BorrowerOperations)
+  deployer.deploy(PriceFeed)
+  deployer.deploy(SortedTroves)
+  deployer.deploy(TroveManager)
+  deployer.deploy(ActivePool)
+  deployer.deploy(StabilityPool)
+  deployer.deploy(DefaultPool)
+  deployer.deploy(FunctionCaller)
 
   deployer.then(async () => {
     const borrowerOperations = await BorrowerOperations.deployed()
@@ -42,12 +41,26 @@ module.exports = function(deployer) {
     const activePool = await ActivePool.deployed()
     const stabilityPool = await StabilityPool.deployed()
     const defaultPool = await DefaultPool.deployed()
+
+    const functionCaller = await FunctionCaller.deployed()
+
+    BorrowerOperations.setAsDeployed(borrowerOperations)
+    PriceFeed.setAsDeployed(priceFeed)
+    SortedTroves.setAsDeployed(sortedTroves)
+    TroveManager.setAsDeployed(troveManager)
+    ActivePool.setAsDeployed(activePool)
+    StabilityPool.setAsDeployed(stabilityPool)
+    DefaultPool.setAsDeployed(defaultPool)
+    FunctionCaller.setAsDeployed(functionCaller)
+    
+    deployer.deploy(LUSDToken)
     const lusdToken = await LUSDToken.new(
       troveManager.address,
       stabilityPool.address,
       borrowerOperations.address
     )
-    const functionCaller = await FunctionCaller.deployed()
+    LUSDToken.setAsDeployed(lusdToken)
+    
 
     const liquityContracts = {
       borrowerOperations,
