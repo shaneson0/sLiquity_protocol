@@ -64,7 +64,7 @@
        // port: 8545,
        network_id: "10001",
        gasPrice: 10000000000,
-       web3: () => new HDWalletProvider({
+       provider: () => new HDWalletProvider({
          providerOrUrl: "https://moeing.tech:9545", // amber
          privateKeys: [
            "1117a04e36f2c8519c78ab59ce0cbca4cf3ccb91fd9fc9dcf56c59986d56740f"

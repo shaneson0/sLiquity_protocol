@@ -1,12 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2021-09-13 19:33:45
- * @LastEditTime: 2021-09-15 13:51:54
- * @LastEditors: your name
+ * @LastEditTime: 2021-09-15 19:15:18
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /sLiquityProtocol/migrations/2_deploy_contracts.js
  */
 // Buidler-Truffle fixture for deployment to Buidler EVM
+
+const web3 =require('web3')
 
 const SortedTroves = artifacts.require("./SortedTroves.sol")
 const ActivePool = artifacts.require("./ActivePool.sol")
