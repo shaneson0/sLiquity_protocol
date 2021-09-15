@@ -1,4 +1,5 @@
 
+const web3 = require("web3")
 const { TestHelper: th } = require("../utils/testHelpers.js")
 const dh = require("./deploymentHelpers.js")
 
